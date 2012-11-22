@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Ritningsnamngivning &middot; Beckman Creative</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ritningsnamngivning">
+  <meta name="author" content="Pelle Beckman">
+  <title>Ritningsnamngivning</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <style type="text/css">
+  html, body, input, button, select, label, legend {
+    font-size: 10pt;
+    font-family: 'Open Sans', sans-serif;
+
+  }
+
+  #explanation {
+    display: none;
+  }
+
+  </style>
+  <script src="js/jquery-latest.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $("#namingform").change(function() {
+        updateDrawingNames();
+      });
+
+      $("#explain_button").click(function() {
+        explainName();
+      });
+
+      updateDrawingNames();
+    });
+
+    function pad (str, max) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+
+    function updateDrawingNames() {
+      var drawing_def_name = new Array();
+      
+      // drawing_def_name
+      drawing_def_name.push($("#discipline").val());
+      drawing_def_name.push("-");
+      drawing_def_name.push($("#bsab_code_custom").val());
+      drawing_def_name.push(".");
+      drawing_def_name.push($("#drawing_category").val());
+
+      // Förslags-, huvud- och bygglovshandlingar visas i ritningsnr.
+      if($("#drawing_classification").val() < 4) {
+        drawing_def_name.push($("#drawing_classification").val());
+      }
+      
+      drawing_def_name.push("-");
+      
+      // Fasader och sektioner redovisar inte våning eller våningsdel
+      if($("#drawing_category").val() == "2" || $("#drawing_category").val() == "3") {
+        last_part = $("#house_nr").val() + pad($("#consecutive_nr").val(), 2);
+        $("#drawing_def_name").push(last_part);
+      } 
+
+      // Byggnader med fler än 9 våningar redovisas 
+      else if($("#more_than_9_storeys").attr('checked')) {
+        last_part = $("#house_nr").val() +
+                    pad($("#storey_nr").val(), 2) +
+                    pad($("#storey_nr_part").val(), 2) +
+                    $("#consecutive_nr").val();
+        drawing_def_name.push(last_part);
+        $("#drawing_def_name").val(drawing_def_name.join(""));
+      } else {
+        drawing_def_name.push($("#house_nr").val());
+        drawing_def_name.push($("#storey_nr").val());
+        drawing_def_name.push($("#storey_nr_part").val());
+
+        drawing_def_name[10] = $("#consecutive_nr").val();
+      }
+
+      $("#drawing_def_name").val(drawing_def_name.join(""));
+    }
+
+    function explainName() {
+      var drawing_name = $("#drawing_def_name").val();
+      var dr_data = drawing_name.split("");
+      var explanation = new Array();
+
+      if(dr_data[1] != "-") {
+        explanation.push("Ritningsnumret innehåller fel");
+        $("#explanation").html(explanation.join(""));
+        $("#explanation").show();
+        return;
+      }
+
+      switch(dr_data[0]) {
+        case 'A':
+        explanation.push("Arkitektritning");
+        break;
+
+        default:
+        explanation.push("Någon annans ritning");
+        break;
+      }
+
+      $("#explanation").html(explanation.join(""));
+      $("#explanation").show();
+    }
+
+    
+  </script>
+</head>
+<body>
+<div class="container" style="margin-top: 60px;">
+<h4>Ritningsnamngivning</h4>
+<p>Enligt SS 03 22 71</p>
+
+  
+<fieldset>
+<form id="namingform">
+<div class="row">
+<div class="span3">
+<legend>Disciplin</legend>
+<select name="discipline" id="discipline">
+  <option value="A">Arkitekt</option>
+  <option value="E">Elprojektör</option>
+  <option value="B">Brandkonsult</option>
+  <option value="K">Byggnadskonstruktör</option>
+  <option value="V">VVS</option>
+  <option value="I">Inredningsarkitekt</option>
+</select>
+</div>
+
+<div class="span3">
+<legend>Innehåll</legend>
+<select name="bsab_code" id="bsab_code">
+  <option value="40">40. Sammansatt redovisning</option>
+  <option value="41">41. Yttertak och ytterbjälklag</option>
+  <option value="42">42. Yttervägg</option>
+  <option value="44">44. Invändiga ytskikt</option>
+  <option value="45">45. Huskompletteringar</option>
+  <option value="46">46. Rumskompletteringar</option>
+  <option value="49">49. Övrigt</option>
+</select>
+<input id="bsab_code_custom" name="bsab_code_custom" placeholder="Egen kod">
+</div>
+
+<div class="span3">
+<legend>Klassificering</legend>
+<select name="drawing_classification" id="drawing_classification">
+  <option value="1">Förslagshandlingar</option>
+  <option value="2">Huvudhandlingar</option>
+  <option value="3">Bygglovshandlingar</option>
+  <option value="X">Bygghandlingar</option>
+  <option value="X">Gemensamma filer för alla konsulter</option>
+  <option value="X">Specialfiler</option>
+  <option value="X">Samgranskningsritning</option>
+  <option value="X">Masterplan</option>
+  <option value="X">Nollhandling</option>
+</select>
+</div>
+
+
+
+<div class="span3">
+<legend>Kategorisering</legend>
+<select name="drawing_category" id="drawing_category">
+  <option value="0">0. Sammansatta ritningar</option>
+  <option value="1">1. Planritningar</option>
+  <option value="2">2. Sektioner (snitt, profiler)</option>
+  <option value="3">3. Fasadritningar</option>
+  <option value="4">4. Uppställningsritningar</option>
+  <option value="5">5. Förteckningsritningar</option>
+  <option value="6">6. Detaljritningar</option>
+  <option value="7">7. Samordningsritningar</option>
+  <option value="8">8. Scheman</option>
+</select>
+<span class="help-block">Enligt SS 03 22 71</span>
+</div>
+</div> <!-- // row -->
+
+<div class="row">
+<div class="span12">
+<hr />
+</div>
+</div>
+
+<div class="row">
+<div class="span3">
+<h6>Hus</h6>
+<input name="house_nr" id="house_nr" placeholder="Husnummer">
+<label class="checkbox">
+<input type="checkbox" value="more_than_9_storeys" id="more_than_9_storeys">Fler än 9 plan eller delar</label>
+</div>
+
+<div class="span3">
+<h6>Plan</h6>
+<input name="storey_nr" id="storey_nr" class="input-small" placeholder="Plan" />
+<input name="storey_nr_part" id="storey_nr_part" class="input-small" placeholder="Del av plan" />
+</div>
+
+<div class="span3">
+<h6>Löpnummer</h6>
+<input id="consecutive_nr" name="consecutive_nr">
+</div>
+
+</div>
+<div class="row">
+<div class="span12">
+<hr />
+</div>
+</div>
+
+<div class="row">
+<!--
+<div class="span6">
+<h5>Modellfil</h5>
+<input id="drawing_model_name" name="drawing_model_name" type="text" style="width:100%; font-size: 24pt; padding: 14px 0 14px 0;">
+<span class="help-block">&nbsp;</span>
+</div>
+-->
+
+<div class="span">
+<h4>Ritningsnamn</h4>
+<div class="input-append">
+<input id="drawing_def_name" name="drawing_def_name" type="text" style="width:600px; font-size: 24pt; padding: 14px 0 14px 0;">
+<button class="btn" type="button" id="update_button" name="explain_button" style="padding: 14px 24px 14px 24px;">Uppdatera</button>
+<button class="btn" type="button" id="explain_button" name="explain_button" style="padding: 14px 24px 14px 24px;">Förklara</button>
+</div>
+<span class="help-block">&nbsp;</span>
+</div>
+</div> <!-- // row -->
+
+<div class="row">
+<div class="span12">
+<div class="alert alert-success" id="explanation">
+<p><strong>Oh snap!</strong> Change a few things up and try submitting again.</p>
+</div>
+</div>
+</div> <!-- // row -->
+
+</form>
+</fieldset>
+
+</div> <!-- // container -->
+</body>
+</html>
