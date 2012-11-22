@@ -14,6 +14,7 @@
   <!--[if lt IE 9]>
   <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+
   <style type="text/css">
   html, body, input, button, select, label, legend {
     font-size: 10pt;
@@ -92,13 +93,17 @@
       var dr_data = drawing_name.split("");
       var explanation = new Array();
 
-      if(dr_data[1] != "-") {
+      // Det finns säkert någon bugg i den här regexpen, men
+      // den verkar stämma för ögonblicket.
+      // Format X-DD.DD-D(DDDDD) 
+      // ^[A-Z]\-[0-9]{2}\.[0-9]{1,2}\-[0-9]+$
+      if(!drawing_name.match("^[A-Z]\\-[0-9]{2}\\.[0-9]{1,2}\\-[0-9]+$")) {
         explanation.push("Ritningsnumret innehåller fel");
         $("#explanation").html(explanation.join(""));
         $("#explanation").show();
         return;
       }
-
+      
       switch(dr_data[0]) {
         case 'A':
         explanation.push("Arkitektritning");
