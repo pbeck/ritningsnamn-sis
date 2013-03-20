@@ -7,18 +7,19 @@
   <meta name="description" content="Ritningsnamngivning">
   <meta name="author" content="Pelle Beckman">
   <title>Ritningsnamngivning</title>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Karla:400,700' rel='stylesheet' type='text/css'>
 
-  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-  <!--[if lt IE 9]>
-  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
+
 
   <style type="text/css">
   html, body, input, button, select, label, legend {
     font-size: 10pt;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Karla', 'Open Sans', sans-serif;
 
   }
 
@@ -52,7 +53,13 @@
       // drawing_def_name
       drawing_def_name.push($("#discipline").val());
       drawing_def_name.push("-");
-      drawing_def_name.push($("#bsab_code_custom").val());
+
+      if($("#bsab_code_custom").val()) {
+        drawing_def_name.push($("#bsab_code_custom").val());
+      } else {
+        drawing_def_name.push($("#bsab_code").val());
+      }
+      
       drawing_def_name.push(".");
       drawing_def_name.push($("#drawing_category").val());
 
@@ -88,6 +95,7 @@
       $("#drawing_def_name").val(drawing_def_name.join(""));
     }
 
+    // Currently not used
     function explainName() {
       var drawing_name = $("#drawing_def_name").val();
       var dr_data = drawing_name.split("");
@@ -124,9 +132,7 @@
 <body>
 <div class="container" style="margin-top: 60px;">
 <h4>Ritningsnamngivning</h4>
-<p>Enligt SS 03 22 71</p>
-
-  
+ 
 <fieldset>
 <form id="namingform">
 <div class="row">
@@ -134,26 +140,52 @@
 <legend>Disciplin</legend>
 <select name="discipline" id="discipline">
   <option value="A">Arkitekt</option>
-  <option value="E">Elprojektör</option>
   <option value="B">Brandkonsult</option>
-  <option value="K">Byggnadskonstruktör</option>
-  <option value="V">VVS</option>
+  <option value="E">Elprojektör</option>
+  <option value="F">Förvaltare</option>
+  <option value="G">Geotekniker</option>
   <option value="I">Inredningsarkitekt</option>
+  <option value="K">Byggnadskonstruktör</option>
+  <option value="L">Landskapsarkitekt</option>
+  <option value="M">Markprojektör</option>
+  <option value="P">Projekt- och entreprenadgemensamt</option>
+  <option value="R">VA-projektör</option>
+  <option value="S">Styr- och övervakningsprojektör</option>
+  <option value="V">VVS</option>
+  <option value="W">VS-projektör när både v- och vs-projektör finns</option>
+  
 </select>
 </div>
 
 <div class="span3">
-<legend>Innehåll</legend>
+<legend>Innehåll (BSAB-kod)</legend>
 <select name="bsab_code" id="bsab_code">
   <option value="40">40. Sammansatt redovisning</option>
   <option value="41">41. Yttertak och ytterbjälklag</option>
   <option value="42">42. Yttervägg</option>
+  <option value="43">43. Innerväggar</option>
   <option value="44">44. Invändiga ytskikt</option>
   <option value="45">45. Huskompletteringar</option>
   <option value="46">46. Rumskompletteringar</option>
   <option value="49">49. Övrigt</option>
 </select>
-<input id="bsab_code_custom" name="bsab_code_custom" placeholder="Egen kod">
+<input id="bsab_code_custom" name="bsab_code_custom" placeholder="Egen kod" />
+</div>
+
+<div class="span3">
+<legend>Ritningskategori (SS 03 22 71)</legend>
+<select name="drawing_category" id="drawing_category">
+  <option value="0">0. Sammansatta ritningar</option>
+  <option value="1">1. Planritningar</option>
+  <option value="2">2. Sektioner (snitt, profiler)</option>
+  <option value="3">3. Fasadritningar</option>
+  <option value="4">4. Uppställningsritningar</option>
+  <option value="5">5. Förteckningsritningar</option>
+  <option value="6">6. Detaljritningar</option>
+  <option value="7">7. Samordningsritningar</option>
+  <option value="8">8. Scheman</option>
+</select>
+<input id="drawing_category_custom" name="drawing_category_custom" placeholder="Egen kod" />
 </div>
 
 <div class="span3">
@@ -171,23 +203,6 @@
 </select>
 </div>
 
-
-
-<div class="span3">
-<legend>Kategorisering</legend>
-<select name="drawing_category" id="drawing_category">
-  <option value="0">0. Sammansatta ritningar</option>
-  <option value="1">1. Planritningar</option>
-  <option value="2">2. Sektioner (snitt, profiler)</option>
-  <option value="3">3. Fasadritningar</option>
-  <option value="4">4. Uppställningsritningar</option>
-  <option value="5">5. Förteckningsritningar</option>
-  <option value="6">6. Detaljritningar</option>
-  <option value="7">7. Samordningsritningar</option>
-  <option value="8">8. Scheman</option>
-</select>
-<span class="help-block">Enligt SS 03 22 71</span>
-</div>
 </div> <!-- // row -->
 
 <div class="row">
@@ -199,15 +214,16 @@
 <div class="row">
 <div class="span3">
 <h6>Hus</h6>
-<input name="house_nr" id="house_nr" placeholder="Husnummer">
-<label class="checkbox">
-<input type="checkbox" value="more_than_9_storeys" id="more_than_9_storeys">Fler än 9 plan eller delar</label>
+<input name="house_nr" id="house_nr" placeholder="Husnummer eller husnamn">
+
 </div>
 
 <div class="span3">
 <h6>Plan</h6>
 <input name="storey_nr" id="storey_nr" class="input-small" placeholder="Plan" />
 <input name="storey_nr_part" id="storey_nr_part" class="input-small" placeholder="Del av plan" />
+<label class="checkbox">
+<input type="checkbox" value="more_than_9_storeys" id="more_than_9_storeys">Fler än 9 plan eller delar</label>
 </div>
 
 <div class="span3">
@@ -231,13 +247,15 @@
 </div>
 -->
 
-<div class="span">
+<div class="span12">
 <h4>Ritningsnamn</h4>
-<div class="input-append">
-<input id="drawing_def_name" name="drawing_def_name" type="text" style="width:600px; font-size: 24pt; padding: 14px 0 14px 0;">
+<!-- <div class="input-append"> -->
+<input id="drawing_def_name" name="drawing_def_name" type="text" style="width: 100%; font-size: 24pt; padding: 14px 0 14px 0;">
+<!--
 <button class="btn" type="button" id="update_button" name="explain_button" style="padding: 14px 24px 14px 24px;">Uppdatera</button>
 <button class="btn" type="button" id="explain_button" name="explain_button" style="padding: 14px 24px 14px 24px;">Förklara</button>
-</div>
+-->
+<!-- </div> -->
 <span class="help-block">&nbsp;</span>
 </div>
 </div> <!-- // row -->
