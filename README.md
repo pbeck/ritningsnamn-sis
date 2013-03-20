@@ -3,4 +3,4 @@ ritningsnamn-sis
 
 Ritningsnamngivning enligt SiS
 
-http://beckmancreative.se/ritningsnamn-sis/
+http://pbeck.github.com/ritningsnamn-sis
