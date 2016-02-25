@@ -160,14 +160,33 @@
 <div class="span3">
 <legend>Innehåll (BSAB-kod)</legend>
 <select name="bsab_code" id="bsab_code">
-  <option value="40">40. Sammansatt redovisning</option>
-  <option value="41">41. Yttertak och ytterbjälklag</option>
-  <option value="42">42. Yttervägg</option>
-  <option value="43">43. Innerväggar</option>
-  <option value="44">44. Invändiga ytskikt</option>
-  <option value="45">45. Huskompletteringar</option>
-  <option value="46">46. Rumskompletteringar</option>
-  <option value="49">49. Övrigt</option>
+  
+  <optgroup label="Sammansatt">
+    <option value="01">01. Sammansatt redovisning (sit.plan, samord.ritn).</option>
+  </optgroup>
+  
+  <optgroup label="Rumsbildning">
+    <option value="40">40. Sammansatt redovisning</option>
+    <option value="41">41. Yttertak och ytterbjälklag</option>
+    <option value="42">42. Yttervägg</option>
+    <option value="43">43. Innerväggar</option>
+    <option value="44">44. Invändiga ytskikt</option>
+    <option value="45">45. Huskompletteringar</option>
+    <option value="46">46. Rumskompletteringar</option>
+    <option value="49">49. Övrigt</option>
+  </optgroup>
+  
+  <optgroup label="VA, VVS, Kyla">
+    <option value="50">50. Sammansatt redovisning</option>
+    <option value="51">51. VA m.m. i mark utanför husYttertak och ytterbjälklag</option>
+    <option value="52">52. Försörjningssystem</option>
+    <option value="53">53. Avloppsvattensystem m.m.</option>
+    <option value="54">54. Brandsläckningssystem</option>
+    <option value="55">55. Kylsystem</option>
+    <option value="56">56. Värmesystem</option>
+    <option value="57">57. Luftbehandlingssystem</option>
+  </optgroup>
+  
 </select>
 <input id="bsab_code_custom" name="bsab_code_custom" placeholder="Egen kod" />
 </div>
