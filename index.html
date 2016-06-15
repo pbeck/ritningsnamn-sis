@@ -7,19 +7,16 @@
   <meta name="description" content="Ritningsnamngivning">
   <meta name="author" content="Pelle Beckman">
   <title>Ritningsnamngivning</title>
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
   <!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Karla:400,700' rel='stylesheet' type='text/css'>
-
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500" rel="stylesheet">
 
 
   <style type="text/css">
   html, body, input, button, select, label, legend {
-    font-size: 10pt;
-    font-family: 'Karla', 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-family: 'Roboto Mono', 'Source Code Pro', 'Open Sans', sans-serif;
 
   }
 
@@ -93,6 +90,7 @@
       }
 
       $("#drawing_def_name").val(drawing_def_name.join(""));
+
     }
 
     // Currently not used
@@ -131,8 +129,11 @@
 </head>
 <body>
 <div class="container" style="margin-top: 60px;">
-<h4>Ritningsnamngivning</h4>
- 
+<h3>Ritningsnamngivning</h3>
+<p>Det här är ett webbverktyg för att underlätta ritningsnamngivning. Ritningsnamnet uppdateras automatiskt när du gör ändringar i formuläret. Tänk på att olika företag och konsulter ibland utformar sina egna system för ritningsnamngivning.</p>
+<p><strong>2016-06-15</strong> Bugg: Om varken hus, plan eller löpnummer angetts så avslutas ritningsnamnet med '-'.</p>
+<hr />
+
 <fieldset>
 <form id="namingform">
 <div class="row">
@@ -192,7 +193,7 @@
 </div>
 
 <div class="span3">
-<legend>Ritningskategori (SS 03 22 71)</legend>
+<legend>Kategori (SS 03 22 71)</legend>
 <select name="drawing_category" id="drawing_category">
   <option value="0">0. Sammansatta ritningar</option>
   <option value="1">1. Planritningar</option>
@@ -232,13 +233,13 @@
 
 <div class="row">
 <div class="span3">
-<h6>Hus</h6>
+<legend>Hus</legend>
 <input name="house_nr" id="house_nr" placeholder="Husnummer eller husnamn">
 
 </div>
 
 <div class="span3">
-<h6>Plan</h6>
+<legend>Plan</legend>
 <input name="storey_nr" id="storey_nr" class="input-small" placeholder="Plan" />
 <input name="storey_nr_part" id="storey_nr_part" class="input-small" placeholder="Del av plan" />
 <label class="checkbox">
@@ -246,7 +247,7 @@
 </div>
 
 <div class="span3">
-<h6>Löpnummer</h6>
+<legend>Löpnummer</legend>
 <input id="consecutive_nr" name="consecutive_nr">
 </div>
 
@@ -258,18 +259,11 @@
 </div>
 
 <div class="row">
-<!--
-<div class="span6">
-<h5>Modellfil</h5>
-<input id="drawing_model_name" name="drawing_model_name" type="text" style="width:100%; font-size: 24pt; padding: 14px 0 14px 0;">
-<span class="help-block">&nbsp;</span>
-</div>
--->
 
 <div class="span12">
 <h4>Ritningsnamn</h4>
 <!-- <div class="input-append"> -->
-<input id="drawing_def_name" name="drawing_def_name" type="text" style="width: 100%; font-size: 24pt; padding: 14px 0 14px 0;">
+<input id="drawing_def_name" name="drawing_def_name" type="text" style="width: 100%; font-size: 24pt; padding: 14px 6px 14px 6px;">
 <!--
 <button class="btn" type="button" id="update_button" name="explain_button" style="padding: 14px 24px 14px 24px;">Uppdatera</button>
 <button class="btn" type="button" id="explain_button" name="explain_button" style="padding: 14px 24px 14px 24px;">Förklara</button>
@@ -289,6 +283,8 @@
 
 </form>
 </fieldset>
+<hr />
+<p style="color: #666;">💡 <a href="https://github.com/pbeck/ritningsnamn-sis">Mera information på GitHub</a> &middot; 🔨&nbsp;Byggt av <a href="http://beckmancreative.se">Pelle Beckman</a></p>
 
 </div> <!-- // container -->
 </body>
